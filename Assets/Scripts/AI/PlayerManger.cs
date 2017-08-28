@@ -21,7 +21,7 @@ public class PlayerManger : MonoBehaviour
         _syncPositionRequest = GetComponent<SyncPositionRequest>();
         _syncPlayerRequest = GetComponent<SyncPlayerRequest>();
         _syncPlayerRequest.DefaultRequest();
-        InvokeRepeating("SyncPositon", 3f, 0.05f);
+        InvokeRepeating("SyncPositon", 3f, 0.02f);
 	}
 	
     //向服务端发送自身位置
@@ -61,8 +61,9 @@ public class PlayerManger : MonoBehaviour
             GameObject go = DictTool.GetValue(_playerDict, pd.Username);
             Debug.Log(go);
             if (go!=null)
-            {
-                go.transform.position = new Vector3(pd.Pos.X, pd.Pos.Y, pd.Pos.Z);
+            {                
+                go.transform.position=Vector3.MoveTowards(go.transform.position,new Vector3(pd.Pos.X,pd.Pos.Y,pd.Pos.Z),0.1f);
+//                go.transform.position = new Vector3(pd.Pos.X, pd.Pos.Y, pd.Pos.Z);
             }
         }
     }
